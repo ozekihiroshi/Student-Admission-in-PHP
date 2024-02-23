@@ -1,3 +1,13 @@
+<?php
+/*
+Plugin Name: Web Application System for Admissions
+Description: Plugin to manage Online Application System.
+Version: 1.0
+Author: Hiroshi Ozeki
+*/
+
+?>
+
 <!--  Author Name: MH RONY.
                         GigHub Link: https://github.com/dev-mhrony
                         Facebook Link:https://www.facebook.com/dev.mhrony
