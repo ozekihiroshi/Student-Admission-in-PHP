@@ -42,4 +42,16 @@ function wasa_enqueue_scripts() {
     wp_enqueue_style('custom-style', plugin_dir_url(__FILE__) . 'style.css', array(), '1.0', 'all');
 }
 add_action('wp_enqueue_scripts', 'wasa_enqueue_scripts');
+
+// ショートコードを定義する関数
+function wasa_display_admission_form_shortcode() {
+    ob_start(); // 出力をバッファリング
+    include_once(plugin_dir_path(__FILE__) . 'includes/admission-form.php'); // 入学フォームのコードを読み込む
+    return ob_get_clean(); // バッファリングされた出力を返す
+}
+
+// ショートコードを登録
+add_shortcode('admission_form', 'wasa_display_admission_form_shortcode');
+
+
 ?>
