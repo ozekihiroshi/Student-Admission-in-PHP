@@ -14,24 +14,25 @@ function wasa_create_database_table() {
 
     $sql = "CREATE TABLE $table_name (
         id mediumint(9) NOT NULL AUTO_INCREMENT,
-        name varchar(50) NOT NULL,
+        sname varchar(200) NOT NULL,
+        gname varchar(200) NOT NULL,
+        contact varchar(50) NOT NULL,
         email varchar(100) NOT NULL,
-        phone varchar(20) NOT NULL,
-        PRIMARY KEY  (id)
+        address varchar(2000) NOT NULL,
+        class varchar(10) NOT NULL,
+        shift int NOT NULL,
+        gender varchar(10) NOT NULL,
+        blgroup varchar(5) NOT NULL,
+        division int NOT NULL,
+        age int(3) NOT NULL, // 新しい項目 age を追加
+        PRIMARY KEY  (id),
+        UNIQUE KEY email (email) // ユニークキーの追加
     ) $charset_collate;";
 
-    require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
-    dbDelta( $sql );
+    require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+    dbDelta($sql);
 }
-register_activation_hook( __FILE__, 'wasa_create_database_table' );
-
-// プラグインが無効化されたときにテーブルを削除
-function wasa_delete_database_table() {
-    global $wpdb;
-    $table_name = $wpdb->prefix . 'admissions';
-    $wpdb->query("DROP TABLE IF EXISTS $table_name");
-}
-register_deactivation_hook( __FILE__, 'wasa_delete_database_table' );
+register_activation_hook(__FILE__, 'wasa_create_database_table');
 
 // スクリプトとスタイルシートのエンキュー
 function wasa_enqueue_scripts() {
