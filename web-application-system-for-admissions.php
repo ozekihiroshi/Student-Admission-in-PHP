@@ -50,9 +50,11 @@ function wasa_display_admission_form_shortcode() {
     include_once(plugin_dir_path(__FILE__) . 'includes/admission-form.php'); // 入学フォームのコードを読み込む
     return ob_get_clean(); // バッファリングされた出力を返す
 }
-// アクションフックを登録
-add_action( 'admin_post_process_admission_form', 'process_admission_form_function' );
-add_action( 'admin_post_nopriv_process_admission_form', 'process_admission_form_function' );
+// ログインユーザー向けの処理
+add_action( 'admin_post_process_admission_form', 'wasa_process_admission_form' );
+
+// 非ログインユーザー向けの処理
+add_action( 'admin_post_nopriv_process_admission_form', 'wasa_process_admission_form' );
 // ショートコードを登録
 add_shortcode('admission_form', 'wasa_display_admission_form_shortcode');
 
