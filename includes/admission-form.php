@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $age = intval($_POST["age"]);
 
     // 確認画面からの送信であれば登録処理を行う
-    if (isset($_POST['from_confirmation']) && $_POST['from_confirmation'] == 'yes') {
+    if (isset($_POST['register_student']) && $_POST['register_student'] == 'yes') {
         // データベースに登録
         global $wpdb;
         $table_name = $wpdb->prefix . 'admissions';
@@ -35,10 +35,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 'age' => $age
             )
         );
-
         // 登録が成功したら、成功メッセージを表示
         echo "<div class='success-message'>Application submitted successfully!</div>";
-    } else {
+    } elseif (isset($_POST['process_admission_form']) && $_POST['process_admission_form'] == 'yes') { 
         // 確認画面を表示する
         include 'confirmation-page.php';
     }
