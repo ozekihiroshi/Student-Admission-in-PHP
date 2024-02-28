@@ -14,12 +14,39 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $division = intval($_POST["division"]);
     $age = intval($_POST["age"]);
 
-    // 確認画面を表示する
-    include 'confirmation-page.php';
+    // 確認画面からの送信であれば登録処理を行う
+    if (isset($_POST['from_confirmation']) && $_POST['from_confirmation'] == 'yes') {
+        // データベースに登録
+        global $wpdb;
+        $table_name = $wpdb->prefix . 'admissions';
+        $wpdb->insert(
+            $table_name,
+            array(
+                'sname' => $sname,
+                'gname' => $gname,
+                'contact' => $contact,
+                'email' => $email,
+                'address' => $address,
+                'class' => $class,
+                'shift' => $shift,
+                'gender' => $gender,
+                'blgroup' => $blgroup,
+                'division' => $division,
+                'age' => $age
+            )
+        );
+
+        // 登録が成功したら、成功メッセージを表示
+        echo "<div class='success-message'>Application submitted successfully!</div>";
+    } else {
+        // 確認画面を表示する
+        include 'confirmation-page.php';
+    }
 } else {
     // フォームを表示する
     include 'registration-form.php';
 }
 ?>
+
 
 

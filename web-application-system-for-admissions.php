@@ -50,50 +50,7 @@ function wasa_display_admission_form_shortcode() {
     include_once(plugin_dir_path(__FILE__) . 'includes/admission-form.php'); // 入学フォームのコードを読み込む
     return ob_get_clean(); // バッファリングされた出力を返す
 }
+
+// ショートコードを登録
 add_shortcode('admission_form', 'wasa_display_admission_form_shortcode');
-
-// フォーム送信時の処理
-function wasa_process_admission_form() {
-    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["action"]) && $_POST["action"] == "register_student") {
-        // フォームデータの取得
-        $sname = sanitize_text_field($_POST["sname"]);
-        $gname = sanitize_text_field($_POST["gname"]);
-        $contact = sanitize_text_field($_POST["contact"]);
-        $email = sanitize_email($_POST["email"]);
-        $address = sanitize_text_field($_POST["address"]);
-        $class = sanitize_text_field($_POST["class"]);
-        $shift = sanitize_text_field($_POST["shift"]);
-        $gender = sanitize_text_field($_POST["gender"]);
-        $blgroup = sanitize_text_field($_POST["blgroup"]);
-        $division = sanitize_text_field($_POST["division"]);
-        $age = intval($_POST["age"]); // 整数に変換
-
-        // データベースに登録
-        global $wpdb;
-        $table_name = $wpdb->prefix . 'admissions';
-        $wpdb->insert(
-            $table_name,
-            array(
-                'sname' => $sname,
-                'gname' => $gname,
-                'contact' => $contact,
-                'email' => $email,
-                'address' => $address,
-                'class' => $class,
-                'shift' => $shift,
-                'gender' => $gender,
-                'blgroup' => $blgroup,
-                'division' => $division,
-                'age' => $age
-            )
-        );
-
-        // 登録が成功したら、成功メッセージを表示
-        echo "<div class='success-message'>Application submitted successfully!</div>";
-    } else {
-        // フォーム送信されていないか、正しいアクションが指定されていない場合は、確認画面を表示
-        include_once(plugin_dir_path(__FILE__) . 'includes/confirmation-page.php');
-    }
-}
-add_action('init', 'wasa_process_admission_form');
 ?>
